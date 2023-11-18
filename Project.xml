@@ -56,9 +56,9 @@
         <label>spine</label>
         <subpath>build</subpath>
         <remote>
-          <url>https://github.com/EsotericSoftware/spine-runtimes.git</url>
+          <url>https://github.com/PierceLBrooks/spine-runtimes.git</url>
           <git_repo>
-            <branch>4.1</branch>
+            <branch>pierce</branch>
             <credentials>
               <username>username</username>
               <password>password</password>
@@ -66,30 +66,9 @@
           </git_repo>
         </remote>
         <build>
-          <post>
-            <build>
-              <shells>
-                <shell>
-                  <work><install></install>/dist</work>
-                  <commands>
-                    <command>
-                      <if_exists>
-                        <exists><install></install>/dist/spine</exists>
-                        <else>
-                          <copy>
-                            <from><install></install>/dist/include</from>
-                            <to><install></install>/dist/spine</to>
-                          </copy>
-                        </else>
-                      </if_exists>
-                    </command>
-                  </commands>
-                </shell>
-              </shells>
-            </build>
-          </post>
           <arguments>
             <argument>-DSPINE_SFML=OFF</argument>
+            <argument>-DBUILD_TESTING=OFF</argument>
           </arguments>
           <cmake>
             <generator>
@@ -110,11 +89,11 @@
           </export>
           <export type="headers">
             <key>SPINE_INCLUDE_PATH</key>
-            <value><install></install>/dist</value>
+            <value><install></install>/dist/spine-cpp/include</value>
           </export>
           <export type="libraries">
             <key>SPINE_LIBRARIES_PATH</key>
-            <value><install></install>/dist/lib</value>
+            <value><install></install>/dist/spine-cpp/lib</value>
           </export>
         </exports>
         <imports></imports>
@@ -155,5 +134,22 @@
         </imports>
       </target>
     </targets>
+    <post timing="build">
+      <build>
+        <shells>
+          <shell>
+            <work><distribution></distribution></work>
+            <commands>
+              <command>
+                <copy>
+                  <from><distribution></distribution>/../../data</from>
+                  <to><distribution></distribution></to>
+                </copy>
+              </command>
+            </commands>
+          </shell>
+        </shells>
+      </build>
+    </post>
   </project>
 </buildster>
